@@ -10,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,17 +22,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table (name = "answer")
+@SequenceGenerator (
+		name= "ANSWER_SEQ_GENERATOR", // JPA 내부 시퀀스 이름
+		sequenceName ="ANSWER_SEQ", // 실제 DB에 있는 시퀀스 이름 
+		initialValue = 1, // 시퀀스의 시작 값
+		allocationSize = 1 // 시퀀스의 증가치 (생략하면 1)
+		)
 public class Answer {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ANSWER_SEQ_GENERATOR")
 	private Integer id;// 아이디 (Pk, 자동 증가)
 	
-	@Column (columnDefinition = "TEXT") // 글자 수 제한 없이 긴 글도 가능 (255자 이상)
+	@Column (length = 500) 
 	private String content; // 답변 게시판 내용
 	
-	@CreatedDate
-	private LocalDateTime createDate; // 질문 게시판에 글 작성한 시간
+	private LocalDateTime createdate; // 질문 게시판에 글 작성한 시간
 	
 	// n : 1 관계 -> 답변 다수 : 질문 하나
 	@ManyToOne
