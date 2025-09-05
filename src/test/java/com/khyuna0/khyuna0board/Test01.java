@@ -63,4 +63,16 @@ public class Test01 {
 			System.out.println("글없음");
 		}
 	}
+	
+	// Question subject 질문 제목으로 테스트
+	// 메서드 repository에 생성 후 테스트
+	@Test
+	@DisplayName("질문 제목으로 조회한 글의 번호가 3번인지 테스트")
+	public void testJpa4() {
+		Question question = questionRepository.findBySubject("SBB가 무엇인가요?");
+		assertEquals(3, question.getId());
+		
+		
+	}
+	
 }
