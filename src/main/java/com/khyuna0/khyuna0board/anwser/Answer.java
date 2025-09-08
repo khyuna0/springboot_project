@@ -1,8 +1,8 @@
-package com.khyuna0.khyuna0board.entity;
+package com.khyuna0.khyuna0board.anwser;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.CreatedDate;
+import com.khyuna0.khyuna0board.question.Question;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

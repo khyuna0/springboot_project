@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.khyuna0.khyuna0board.entity.Answer;
-import com.khyuna0.khyuna0board.entity.Question;
-import com.khyuna0.khyuna0board.repository.AnswerRepository;
-import com.khyuna0.khyuna0board.repository.QuestionRepository;
+import com.khyuna0.khyuna0board.anwser.Answer;
+import com.khyuna0.khyuna0board.anwser.AnswerRepository;
+import com.khyuna0.khyuna0board.question.Question;
+import com.khyuna0.khyuna0board.question.QuestionRepository;
 
 @SpringBootTest
 public class Test02 {

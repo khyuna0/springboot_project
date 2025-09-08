@@ -1,7 +1,9 @@
-package com.khyuna0.khyuna0board.entity;
+package com.khyuna0.khyuna0board.question;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.khyuna0.khyuna0board.anwser.Answer;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

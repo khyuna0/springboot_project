@@ -1,10 +1,8 @@
-package com.khyuna0.khyuna0board.repository;
+package com.khyuna0.khyuna0board.question;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.khyuna0.khyuna0board.entity.Question;
 
 
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
