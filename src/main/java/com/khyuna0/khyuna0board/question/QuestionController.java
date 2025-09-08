@@ -6,11 +6,14 @@ import org.glassfish.jaxb.core.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.validation.Valid;
 
 @RequestMapping("/question")
 @Controller
@@ -48,17 +51,31 @@ public class QuestionController {
 	// 같은 요청이지만 get/post 방식에 따라 다르게 설정 가능
 	// 질문 등록 폼 매핑만
 	@GetMapping("/create")
-	public String questionCreate() {
+	public String questionCreate(QuestionForm questionForm) {
 		return "question_form"; 
 	}
 	
-	// 질문 내용을 DB에 저장하는 메서드
-	// 메서드 오버라이딩
+//	// 질문 내용을 DB에 저장하는 메서드
+//	// 메서드 오버라이딩
+//	@PostMapping("/create") 
+//	public String questionCreate(@RequestParam(value="subject") String subject, @RequestParam(value="content") String content) {
+//		// @RequestParam(value="subject") String subject -> String subject = request.getparameter("subject") 
+//		// @RequestParam(value="content") String content -> String content = request.getparameter("content") 
+//		
+//		
+//		questionService.create(subject, content);
+//		return "redirect:/question/list"; // 질문 리스트로 이동 (redirect 필수 - refresh)  
+//	}
+	
+	// 유효성체크
 	@PostMapping("/create") 
-	public String questionCreate(@RequestParam(value="subject") String subject, @RequestParam(value="content") String content) {
-		// @RequestParam(value="subject") String subject -> String subject = request.getparameter("subject") 
-		// @RequestParam(value="content") String content -> String content = request.getparameter("content") 
-		questionService.create(subject, content);
+	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) { // 참이면 유효성 체크에서 에러 발생함
+			return "question_form"; // 에러 발생 시 다시 질문 폼으로 이동
+		}
+		questionService.create(questionForm.getSubject(), questionForm.getContent());
 		return "redirect:/question/list"; // 질문 리스트로 이동 (redirect 필수 - refresh)  
 	}
+	
 }
