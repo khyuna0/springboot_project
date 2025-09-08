@@ -24,10 +24,9 @@ public class AnswerController {
         this.answerService = answerService;
     }
 	
-    @PostMapping(value = "/create/{id}") //답변 등록 요청->오는 파라미터 값 : 부모 질문글의 번호
+    @PostMapping(value = "/create/{id}") //답변 등록 요청 -> 오는 파라미터 값 : 부모 질문글의 번호
 	public String createAnswer(Model model, @PathVariable("id") Integer id, @RequestParam("content") String content) {
 		Question question = questionService.getQuestion(id);		
-		
 		answerService.create(question, content); //DB에 답변 등록
 		
 		return String.format("redirect:/question/detail/%s", id);  
