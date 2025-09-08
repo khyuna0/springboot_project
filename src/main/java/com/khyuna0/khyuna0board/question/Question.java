@@ -3,7 +3,7 @@ package com.khyuna0.khyuna0board.question;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.khyuna0.khyuna0board.anwser.Answer;
+import com.khyuna0.khyuna0board.answer.Answer;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -49,7 +49,7 @@ public class Question {
 	// 1 : n 관계 , 질문 글 하나 : 답변 여러개  
 	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)  
 	// CascadeType -> 질문 글 삭제될 경우 해당 질문 글의 답변 글도 같이 삭제됨
-	private List<Answer> answerList;
+	private List<Answer> answerlist;
 	
 	
 }

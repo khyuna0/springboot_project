@@ -1,4 +1,4 @@
-package com.khyuna0.khyuna0board.anwser;
+package com.khyuna0.khyuna0board.answer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

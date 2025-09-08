@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+textarea {
+	width: 100%; /*textarea 입력창의 기로 넓이 100%로 지정*/
+	
+}
+input[type=submit] {
+	margin-top: 10px; /*submit 버튼의 상단 여백 자정*/
+}

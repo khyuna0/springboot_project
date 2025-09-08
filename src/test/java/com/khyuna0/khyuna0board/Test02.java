@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.khyuna0.khyuna0board.anwser.Answer;
-import com.khyuna0.khyuna0board.anwser.AnswerRepository;
+import com.khyuna0.khyuna0board.answer.Answer;
+import com.khyuna0.khyuna0board.answer.AnswerRepository;
 import com.khyuna0.khyuna0board.question.Question;
 import com.khyuna0.khyuna0board.question.QuestionRepository;
 
@@ -74,7 +74,7 @@ public class Test02 {
 		assertTrue(op.isPresent());
 		Question q = op.get();;
 		
-		List<Answer> answerList = q.getAnswerList();
+		List<Answer> answerList = q.getAnswerlist();
 		// 게으른 초기화 문제 오류 -> 이미  q 엔티티가 닫힌 후에 초기화 시도함
 		// 테스트 과정에서만 발생하는 에러 -> @Transactional 어노테이션으로 방어 가능
 		

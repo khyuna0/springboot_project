@@ -3,10 +3,10 @@ package com.khyuna0.khyuna0board.question;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import groovyjarjarantlr4.v4.parse.ANTLRParser.throwsSpec_return;
+import com.khyuna0.khyuna0board.DataNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor 
@@ -28,7 +28,7 @@ public class QuestionService {
 		if (optional.isPresent()) { // question 반환
 			return optional.get();
 		} else {
-			throw new DataNotFoundException("question not found");
+			throw new DataNotFoundException("question not found"); 
 		}
 		
 	}//

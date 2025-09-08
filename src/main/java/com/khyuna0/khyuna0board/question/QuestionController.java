@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping("/question")
 @Controller
 public class QuestionController {
 	
@@ -23,7 +25,7 @@ public class QuestionController {
 		return "redirect:/question/list";
 	}
 	
-	@GetMapping(value = "/question/list") // value 생략 가능
+	@GetMapping(value = "/list") // value 생략 가능
 	//@ResponseBody
 	public String list(Model model) {
 		//List<Question> questionlist = questionRepository.findAll();		
@@ -32,7 +34,7 @@ public class QuestionController {
 		return "question_list";
 	}
 	
-	@GetMapping(value = "/question/detail/{id}") // 파라미터 이름 없이 값만 넘어왔을 때 처리
+	@GetMapping(value = "/detail/{id}") // 파라미터 이름 없이 값만 넘어왔을 때 처리
 	public String detail(Model model, @PathVariable("id") Integer id) {
 		// service 에 3을 넣어서 호출
 		Question question = questionService.getQuestion(id);
