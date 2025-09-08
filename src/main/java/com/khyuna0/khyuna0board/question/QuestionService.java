@@ -1,5 +1,6 @@
 package com.khyuna0.khyuna0board.question;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class QuestionService {
 		return questionRepository.findAll();
 	}//
 	
-	public Question getQuestion(Integer id) {
+	public Question getQuestion(Integer id) { // 기본키인 질문글 번호로 질문 1개 가져오기
 		Optional<Question> optional = questionRepository.findById(id);
 		
 		if (optional.isPresent()) { // question 반환
@@ -32,5 +33,15 @@ public class QuestionService {
 		}
 		
 	}//
+	
+	
+	public void create(String subject, String content) { // 질문 글 쓰기
+		Question question = new Question();
+		question.setSubject(subject);
+		question.setContent(content);
+		question.setCreatedate(LocalDateTime.now());
+		questionRepository.save(question);
+		
+	}
 	
 }
