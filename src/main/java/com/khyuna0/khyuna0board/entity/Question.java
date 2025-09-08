@@ -1,10 +1,7 @@
 package com.khyuna0.khyuna0board.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

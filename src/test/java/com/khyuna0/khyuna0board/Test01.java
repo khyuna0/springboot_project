@@ -55,7 +55,7 @@ public class Test01 {
 	@DisplayName("id(기본키)로 조회 테스트")
 	public void testJpa3() {
 		Optional<Question> optional = questionRepository.findById(3); // 기본키 조회
-		
+		// optional -> null 값 방어
 		if(optional.isPresent()) { // 참이면 기본키 번호가 존재함
 			Question question = optional.get();
 			assertEquals("SBB가 무엇인가요?", question.getSubject());
@@ -71,8 +71,23 @@ public class Test01 {
 	public void testJpa4() {
 		Question question = questionRepository.findBySubject("SBB가 무엇인가요?");
 		assertEquals(3, question.getId());
-		
-		
+
+	}
+
+	@Test
+	@DisplayName("질문 제목과 내용으로 조회하기")
+	public void testJpa5() {
+		Question question = questionRepository.findBySubjectAndContent("SBB가 무엇인가요?","SBB에 대해 알고 싶습니다.");
+		assertEquals(3, question.getId());
+
 	}
 	
+	@Test
+	@DisplayName("제목에 특정 단어가 들어간 레코드 조회한 글 테스트")
+	public void testJpa6() {
+		List<Question> questionList = questionRepository.findBySubjectLike("SBB%");
+		Question question = questionList.get(0);
+		assertEquals("SBB가 무엇인가요?",question.getSubject());
+
+	}
 }
