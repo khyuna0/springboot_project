@@ -13,14 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.khyuna0.khyuna0board.answer.AnswerForm;
+
 import jakarta.validation.Valid;
 
 @RequestMapping("/question")
 @Controller
 public class QuestionController {
 	
-//	@Autowired
-//	private QuestionRepository questionRepository;
+	@Autowired
+	private QuestionRepository questionRepository;
 	
 	@Autowired
 	private QuestionService questionService;
@@ -41,7 +43,7 @@ public class QuestionController {
 	}
 	
 	@GetMapping(value = "/detail/{id}") // 파라미터 이름 없이 값만 넘어왔을 때 처리
-	public String detail(Model model, @PathVariable("id") Integer id) {
+	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
 		// service 에 3을 넣어서 호출
 		Question question = questionService.getQuestion(id);
 		model.addAttribute("question", question);
@@ -50,7 +52,7 @@ public class QuestionController {
 	
 	// 같은 요청이지만 get/post 방식에 따라 다르게 설정 가능
 	// 질문 등록 폼 매핑만
-	@GetMapping("/create")
+	@GetMapping(value = "/create")
 	public String questionCreate(QuestionForm questionForm) {
 		return "question_form"; 
 	}
@@ -68,7 +70,7 @@ public class QuestionController {
 //	}
 	
 	// 유효성체크
-	@PostMapping("/create") 
+	@PostMapping(value = "/create") 
 	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
 		
 		if(bindingResult.hasErrors()) { // 참이면 유효성 체크에서 에러 발생함
