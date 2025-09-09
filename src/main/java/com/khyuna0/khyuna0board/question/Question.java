@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.khyuna0.khyuna0board.answer.Answer;
+import com.khyuna0.khyuna0board.user.SiteUser;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -51,5 +53,8 @@ public class Question {
 	// CascadeType -> 질문 글 삭제될 경우 해당 질문 글의 답변 글도 같이 삭제됨
 	private List<Answer> answerlist;
 	
+	// n : 1 관계
+	@ManyToOne
+	private SiteUser author; // 글쓴이
 	
 }

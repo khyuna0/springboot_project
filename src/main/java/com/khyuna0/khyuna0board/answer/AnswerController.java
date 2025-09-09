@@ -1,5 +1,7 @@
 package com.khyuna0.khyuna0board.answer;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.khyuna0.khyuna0board.question.Question;
 import com.khyuna0.khyuna0board.question.QuestionService;
+import com.khyuna0.khyuna0board.user.SiteUser;
+import com.khyuna0.khyuna0board.user.UserService;
 
 import jakarta.validation.Valid;
 @RequestMapping("/answer")
@@ -21,20 +25,25 @@ public class AnswerController {
 
 	@Autowired
 	private QuestionService questionService;
-
+	
+	@Autowired
+	private UserService userService;
+	
     AnswerController(AnswerService answerService) {
         this.answerService = answerService;
     }
 	
     @PostMapping(value = "/create/{id}") //답변 등록 요청 -> 오는 파라미터 값 : 부모 질문글의 번호
-	public String createAnswer(Model model, @PathVariable("id") Integer id, @Valid AnswerForm answerForm,  BindingResult bindingResult  ) {
+	public String createAnswer(Model model, @PathVariable("id") Integer id, @Valid AnswerForm answerForm,  BindingResult bindingResult, Principal principal) {
 		Question question = questionService.getQuestion(id);	
+		// principal.getName(); // 로그인한 유저의 아이디 얻기
 		
+		SiteUser siteUser = userService.getUser(principal.getName());
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("question", question); 
 			return "question_detail";
 		}  
-		answerService.create(question,answerForm.getContent()); //DB에 답변 등록
+		answerService.create(question,answerForm.getContent(), siteUser ); //DB에 답변 등록
 		
 		return String.format("redirect:/question/detail/%s", id);  
 	}
