@@ -6,6 +6,7 @@ import java.util.List;
 import org.glassfish.jaxb.core.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -78,6 +79,7 @@ public class QuestionController {
 	
 	// 같은 요청이지만 get/post 방식에 따라 다르게 설정 가능
 	// 질문 등록 폼 매핑만
+	@PreAuthorize("isAuthenticated()")  // 로그인한(인증된) 사용자만 해당 메서드 실행 가능
 	@GetMapping(value = "/create")
 	public String questionCreate(QuestionForm questionForm) {
 		return "question_form"; 
@@ -96,6 +98,7 @@ public class QuestionController {
 //	}
 	
 	// 유효성체크
+	@PreAuthorize("isAuthenticated()") // 로그인한(인증된) 사용자만 해당 메서드 실행 가능
 	@PostMapping(value = "/create") 
 	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
 		
