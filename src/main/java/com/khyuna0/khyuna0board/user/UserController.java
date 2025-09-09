@@ -36,7 +36,7 @@ public class UserController {
 		}
 		try {
 			userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1() );
-			return "redirect:/question/list"; // 첫 화면으로 이동
+			
 			
 		} catch (DataIntegrityViolationException e) { // 중복된 데이터에 대한 예외처리
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class UserController {
 			return "signup_form";
 		}
 		
-		
+		return "redirect:/question/list"; // 첫 화면으로 이동
 	}
 	
 	
