@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.khyuna0.khyuna0board.DataNotFoundException;
+import com.khyuna0.khyuna0board.user.SiteUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,11 +39,12 @@ public class QuestionService {
 	}//
 	
 	
-	public void create(String subject, String content) { // 질문 글 쓰기
+	public void create(String subject, String content, SiteUser user) { // 질문 글 쓰기
 		Question question = new Question();
 		question.setSubject(subject);
 		question.setContent(content);
 		question.setCreatedate(LocalDateTime.now());
+		question.setAuthor(user); // 글쓴이 엔티티 추가
 		questionRepository.save(question);
 		
 	}

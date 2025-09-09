@@ -1,5 +1,6 @@
 package com.khyuna0.khyuna0board.question;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.glassfish.jaxb.core.v2.TODO;
@@ -15,12 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.khyuna0.khyuna0board.answer.AnswerForm;
+import com.khyuna0.khyuna0board.answer.AnswerService;
+import com.khyuna0.khyuna0board.user.SiteUser;
+import com.khyuna0.khyuna0board.user.UserService;
 
 import jakarta.validation.Valid;
 
 @RequestMapping("/question")
 @Controller
 public class QuestionController {
+
+    private final AnswerService answerService;
 	
 	@Autowired
 	private QuestionRepository questionRepository;
@@ -28,6 +34,12 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 	
+	@Autowired
+	private UserService userService;
+
+    QuestionController(AnswerService answerService) {
+        this.answerService = answerService;
+    }
 	
 	/*
 	@GetMapping(value = "/list") // value 생략 가능
@@ -85,12 +97,15 @@ public class QuestionController {
 	
 	// 유효성체크
 	@PostMapping(value = "/create") 
-	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
 		
 		if(bindingResult.hasErrors()) { // 참이면 유효성 체크에서 에러 발생함
 			return "question_form"; // 에러 발생 시 다시 질문 폼으로 이동
 		}
-		questionService.create(questionForm.getSubject(), questionForm.getContent());
+		SiteUser siteUser = userService.getUser(principal.getName());
+		// 현재 로그인된 유저의 username으로 엔티티 받기
+		
+		questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 		return "redirect:/question/list"; // 질문 리스트로 이동 (redirect 필수 - refresh)  
 	}
 	
