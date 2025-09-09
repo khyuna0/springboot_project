@@ -28,11 +28,7 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 	
-	@GetMapping(value = "/") // root 요청 처리
-	public String root(Model model) {
-		
-		return "redirect:/question/list";
-	}
+	
 	/*
 	@GetMapping(value = "/list") // value 생략 가능
 	//@ResponseBody

@@ -5,7 +5,7 @@
 				<h4>회원가입</h4>
 			</div>
 		</div>
-		<form th:action="@{user/signup}" th:object="${userCreateForm}" method="post">
+		<form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
 			<!-- 에러 처리 부분 -->
 			<div th:replace="~{form_errors :: formErrorsFragment}"></div>
 			
