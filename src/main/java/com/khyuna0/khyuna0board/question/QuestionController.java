@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.glassfish.jaxb.core.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,15 +33,32 @@ public class QuestionController {
 		
 		return "redirect:/question/list";
 	}
+	/*
+	@GetMapping(value = "/list") // value 생략 가능
+	//@ResponseBody
+	public String list(Model model, @RequestParam(value ="page", defaultValue = "0") int page) {
+		//List<Question> questionlist = questionRepository.findAll();		
+		//List<Question> questionlist = questionService.getList();
+
+		Page<Question> paging =questionService.getList(page);
+		// 1게시글 10개씩 자른 리스트 (페이지 당 10개)
+		model.addAttribute("questionList", paging);
+		return "question_list";
+	}
+	*/
 	
 	@GetMapping(value = "/list") // value 생략 가능
 	//@ResponseBody
 	public String list(Model model) {
 		//List<Question> questionlist = questionRepository.findAll();		
+		//List<Question> questionlist = questionService.getList();
+
 		List<Question> questionlist = questionService.getList();
+		// 1게시글 10개씩 자른 리스트 (페이지 당 10개)
 		model.addAttribute("questionList", questionlist);
 		return "question_list";
 	}
+	
 	
 	@GetMapping(value = "/detail/{id}") // 파라미터 이름 없이 값만 넘어왔을 때 처리
 	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {

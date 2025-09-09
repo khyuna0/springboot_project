@@ -2,6 +2,8 @@ package com.khyuna0.khyuna0board.question;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -15,5 +17,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
 	// SELECT * FROM question WHERE subject Like %?% 
 	public List<Question> findBySubjectLike(String subject); 	// 제목에 특정 단어가 포함된 레코드 반환
+	
+	// 페이징 관련
+	// public Page<Question> findAll(Pageable pageable);
 	
 }

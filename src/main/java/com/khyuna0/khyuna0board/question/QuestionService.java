@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.khyuna0.khyuna0board.DataNotFoundException;
@@ -18,8 +21,8 @@ public class QuestionService {
 	private final QuestionRepository questionRepository;
 	// @RequiredArgsConstructor에 의해 생성자 방식으로 주입된 questionRepository
 	
-	public List<Question> getList() { // 모든 질문 글 가져오기
-		
+	public List<Question> getList() { // 모든 질문 글 가져오기 -> 페이징
+		//Pageable pageable = PageRequest.of(page, 10); // 1 페이지 당 10개의 게시글 표시
 		return questionRepository.findAll();
 	}//
 	
