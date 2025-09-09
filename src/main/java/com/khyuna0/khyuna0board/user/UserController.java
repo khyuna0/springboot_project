@@ -41,16 +41,20 @@ public class UserController {
 		} catch (DataIntegrityViolationException e) { // 중복된 데이터에 대한 예외처리
 			e.printStackTrace();
 			// 이미 등록된 사용자 아이디의 경우 발생하는 에러 추가
-			bindingResult.rejectValue("signupFailed", "이미 등록된 사용자입니다.");
+			bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
 			return "signup_form";
 		} catch (Exception e) { // 기타 나머지 예외처리
 			e.printStackTrace();
-			bindingResult.rejectValue("signupFailed", "회원 가입 실패입니다");
+			bindingResult.reject("signupFailed", "회원 가입 실패입니다");
 			return "signup_form";
 		}
 		
 		return "redirect:/question/list"; // 첫 화면으로 이동
 	}
 	
+	@GetMapping(value = "/login") // 로그인 폼 매핑
+	public String login() {
+		return "login_form";
+	}
 	
 }
