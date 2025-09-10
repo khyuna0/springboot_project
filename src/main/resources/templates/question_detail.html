@@ -10,6 +10,10 @@
 				th:text="${question.content}">내용</div>
 				<div class="d-flex justify -content-end">
 					<div class="badge bg-light text-dark p-2 text-start">
+					<!-- 글쓴이 표시 -->
+						<div class="mb-2">
+							<span th:if="${question.author != null}" th:text="${question.author.username}"></span>
+						</div>
 						<div th:text="${#temporals.format(question.createdate,'yyyy-MM-dd HH:mm')}">질문등록일</div>
 					</div>
 				</div>
@@ -29,6 +33,10 @@
 				
 				<div class="d-flex justify -content-end">
 					<div class="badge bg-light text-dark p-2 text-start">
+					<!-- 답변 글쓴이 -->
+						<div class="mb-2">
+							<span th:if="${answer.author != null}" th:text="${answer.author.username}"></span>
+						</div>
 						<div th:text="${#temporals.format(answer.createdate,'yyyy-MM-dd HH:mm')}">질문등록일</div>
 					</div>
 				</div>
