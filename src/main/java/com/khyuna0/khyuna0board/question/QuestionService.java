@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.khyuna0.khyuna0board.DataNotFoundException;
 import com.khyuna0.khyuna0board.user.SiteUser;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor 
@@ -62,4 +63,16 @@ public class QuestionService {
 		questionRepository.delete(question);
 	}
 	
+	public void vote(SiteUser siteUser, Question question) { // 질문 글 추천 (업데이트)
+		question.getVoter().add(siteUser); 
+		// question -> 추천을 받은 글의 번호로 조회한 질문 엔티티
+		// question 의 멤버인 voter 를 get 해서 voter 에 추천을 누른 유저의 엔티티를 추가해줌
+		questionRepository.save(question); // 추천한 유저 수가 변경된 질문 엔티티를 다시 save해서 갱신
+	}
+
+	public void questionHit(Question question) {  // 조회수 증가
+		question.setHit(question.getHit() + 1);
+		questionRepository.save(question);
+		
+	}
 }

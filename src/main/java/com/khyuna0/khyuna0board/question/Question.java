@@ -2,6 +2,7 @@ package com.khyuna0.khyuna0board.question;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import com.khyuna0.khyuna0board.answer.Answer;
 import com.khyuna0.khyuna0board.user.SiteUser;
@@ -12,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
@@ -58,4 +60,11 @@ public class Question {
 	
 	private LocalDateTime modifydate; // 질문 글 수정 일시
 	
+	// n : n 관계,  질문 : 추천자
+	@ManyToMany
+	Set<SiteUser> voter; // 글을 추천한 유저가 중복 없이 여러 명의 유저가 저장 -> 유저의 수 = 추천 수
+	// Set - 중복 제거용 컬렉션 사용 -> 유저 한명 당 추천수 1개만 기록하기 위함
+
+	private Integer hit = 0; // 질문 글 조회수
 }
+

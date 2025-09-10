@@ -74,7 +74,9 @@ public class QuestionController {
 	@GetMapping(value = "/detail/{id}") // 파라미터 이름 없이 값만 넘어왔을 때 처리
 	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
 		// service 에 3을 넣어서 호출
+		questionService.questionHit(questionService.getQuestion(id));
 		Question question = questionService.getQuestion(id);
+		
 		model.addAttribute("question", question);
 		return "question_detail";
 	}
@@ -162,5 +164,19 @@ public class QuestionController {
 		
 		return "redirect:/question/list";
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value="/vote/{id}")
+	public String questionVote(@PathVariable("id") Integer id, Principal principal) {
+		Question question = questionService.getQuestion(id); // 유저가 추천한 질문 글의 엔티티 조회
+		SiteUser siteUser = userService.getUser(principal.getName()); // 로그인한 유저의 아이디로 유저 엔티티 조회하기
+		
+		if(!question.getAuthor().getUsername().equals(principal.getName())) { // 참이면 삭제권한 없음 
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "추천 권한이 없습니다.");
+		}
+		questionService.vote(siteUser, question);
+		return String.format("redirect:/question/detail/%s", id);
+	}
+
 	
 }

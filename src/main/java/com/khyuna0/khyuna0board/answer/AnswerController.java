@@ -90,4 +90,14 @@ public class AnswerController {
     	return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
     }
     
+    @PreAuthorize("isAuthenticated()")
+	@GetMapping(value="/vote/{id}")
+	public String answerVote(@PathVariable("id") Integer id, Principal principal) {
+    	Answer answer = answerService.getAnswer(id); // 유저가 추천한 질문 글의 엔티티 조회
+		SiteUser siteUser = userService.getUser(principal.getName()); // 로그인한 유저의 아이디로 유저 엔티티 조회하기
+		
+		answerService.answerVote(answer , siteUser);
+		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+	}
+    
 }

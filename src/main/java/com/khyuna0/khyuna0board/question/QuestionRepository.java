@@ -3,6 +3,8 @@ package com.khyuna0.khyuna0board.question;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
@@ -18,5 +20,10 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	
 	// 페이징 관련
 	// public Page<Question> findAll(Pageable pageable);
+	
+	// 조회수
+//	@Query( value = "UPDATE question SET hit=hit+1 WHERE id = :id"
+//			,nativeQuery = true)
+//	public void updateHit(@Param("id") Integer id); // 질문 글의 기본키 번호로 조회수 증가
 	
 }

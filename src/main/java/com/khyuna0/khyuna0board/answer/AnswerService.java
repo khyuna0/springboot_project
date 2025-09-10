@@ -8,13 +8,20 @@ import org.springframework.stereotype.Service;
 
 import com.khyuna0.khyuna0board.DataNotFoundException;
 import com.khyuna0.khyuna0board.question.Question;
+import com.khyuna0.khyuna0board.question.QuestionRepository;
 import com.khyuna0.khyuna0board.user.SiteUser;
 
 @Service
 public class AnswerService {
+
+    private final QuestionRepository questionRepository;
 	
 	@Autowired
 	private AnswerRepository answerRepository;
+
+    AnswerService(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
 	
 	public void create(Question question, String content, SiteUser author) {
 		Answer answer = new Answer();
@@ -45,6 +52,12 @@ public class AnswerService {
 	
 	public void answerDelete(Answer answer) {
 		answerRepository.delete(answer);
+	}
+	
+	public void answerVote(Answer answer, SiteUser siteUser) {
+		answer.getVoter().add(siteUser);
+		answerRepository.save(answer);
+		
 	}
 }
 

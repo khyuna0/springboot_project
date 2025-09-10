@@ -25,8 +25,17 @@
 					</div>
 				<!-- 질문 글쓴이 / 등록일시 끝 -->	
 				</div>
-				<!-- 수정 버튼 -->
+				
 				<div class="my-3">
+				<!-- 질문 추천 버튼 (badge 버튼) -->
+					<a href="javascript:void(0);"
+					th:data-uri="@{|/question/vote/${question.id}|}"
+					 class="recommend btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated">
+					 추천
+					 <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
+					</a>
+					 
+				<!-- 질문 수정 버튼 -->
 					<a th:href="@{|/question/modify/${question.id}|}"
 					 class="btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated"
 					 th:if="${question.author.username != null and 
@@ -75,6 +84,13 @@
 					
 				</div>
 				<div class="my-3">
+					<!-- 답변 추천 버튼 (badge 버튼) -->
+					<a href="javascript:void(0);"
+					th:data-uri="@{|/answer/vote/${answer.id}|}"
+					 class="recommend btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated">
+					 추천
+					 <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
+					</a>				
 					<!-- 답변 수정 버튼 -->
 					<a th:href="@{|/answer/modify/${answer.id}|}"
 					 class="btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated"
@@ -107,10 +123,20 @@
 	
 	<!-- 자바스크립트 작성 -->
 	<script layout:fragment="script" type="text/javascript">
+		// 삭제
 		const delete_elements = document.getElementsByClassName("delete");
 	    Array.from(delete_elements).forEach(function (element) {
 	      element.addEventListener('click', function () {
 	         if (confirm("정말로 삭제하시겠습니까?")) {
+	            location.href = this.dataset.uri;
+	         };
+	      });
+	   });
+	   // 추천 
+   		const recommend_elements = document.getElementsByClassName("recommend");
+	    Array.from(recommend_elements).forEach(function (element) {
+	      element.addEventListener('click', function () {
+	         if (confirm("추천하시겠습니까?")) {
 	            location.href = this.dataset.uri;
 	         };
 	      });
