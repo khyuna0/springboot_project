@@ -16,6 +16,7 @@
 					<td class="text-start"> <!-- 제목 줄 왼쪽 정렬 -->
 						<!-- 자바 객체의 값을 더할 때는 반드시 ||로 좌우를 감싼다. -->
 						<a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}">제목</a>
+						<span th:text="${#lists.size(question.answerlist)}" ></span> <!-- 답변 글 개수 -->
 					</td>
 					<td> 
 						<span th:if="${question.author != null}" th:text="${question.author.username}"></span> 
