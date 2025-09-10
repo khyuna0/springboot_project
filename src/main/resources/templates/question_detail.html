@@ -17,17 +17,23 @@
 						<div th:text="${#temporals.format(question.createdate,'yyyy-MM-dd HH:mm')}">질문등록일</div>
 					</div>
 				</div>
-				<!-- 수정, 삭제 버튼 -->
+				<!-- 수정 버튼 -->
 				<div class="my-3">
 					<a th:href="@{|/question/modify/${question.id}|}"
 					 class="btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated"
 					 th:if="${question.author.username != null and 
 					 #authentication.getPrincipal().getUsername() == question.author.username}"
 					 th:text="수정">수정 버튼 표시</a>
+				
+				<!-- 삭제 버튼 -->
+					<a href="javascript:void(0);"
+					th:data-uri="@{|/question/delete/${question.id}|}"
+					 class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated"
+					 th:if="${question.author.username != null and 
+					 #authentication.getPrincipal().getUsername() == question.author.username}"
+					 th:text="삭제">삭제 버튼 표시</a>
+					 
 				</div>
-				
-				
-				
 			</div>
 		</div>
 		
@@ -66,4 +72,17 @@
 			<input sec:authorize="isAuthenticated()" type="submit" value="답변 등록"	 class="btn btn-primary my-2">
 		</form>
 	</div>
+	
+	<!-- 자바스크립트 작성 -->
+	<script layout:fragment="script" type="text/javascript">
+		const delete_elements = document.getElementsByClassName("delete");
+	    Array.from(delete_elements).forEach(function (element) {
+	      element.addEventListener('click', function () {
+	         if (confirm("정말로 삭제하시겠습니까?")) {
+	            location.href = this.dataset.uri;
+	         };
+	      });
+	   });
+	</script>
+	
 </html>

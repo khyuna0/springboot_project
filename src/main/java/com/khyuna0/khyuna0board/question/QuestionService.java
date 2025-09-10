@@ -49,4 +49,17 @@ public class QuestionService {
 		
 	}
 	
+	public void modify(Question question, String subject, String content ) { // 질문 글 수정하기
+		
+		question.setSubject(subject); // 새로운 제목으로 저장하기
+		question.setContent(content); // 새로운 내용
+		question.setModifydate(LocalDateTime.now()); // 수정 일시로 업데이트
+		
+		questionRepository.save(question); // 엔티티 수정
+	}
+	
+	public void delete(Question question) {
+		questionRepository.delete(question);
+	}
+	
 }

@@ -100,7 +100,7 @@ public class QuestionController {
 //	}
 	
 	// 유효성체크
-	@PreAuthorize("isAuthenticated()") // 로그인한(인증된) 사용자만 해당 메서드 실행 가능
+	@PreAuthorize("isAuthenticated()") // 로그인한(인증된) 사용자만 해당 메서드 실행 가능 , 폼에서 action 으로 넘어오지 않으면 권한 인증이 안됨
 	@PostMapping(value = "/create") 
 	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
 		
@@ -108,13 +108,14 @@ public class QuestionController {
 			return "question_form"; // 에러 발생 시 다시 질문 폼으로 이동
 		}
 		// principal.getName() => (String) session.getAttribute("sessionId");
-		SiteUser siteUser = userService.getUser(principal.getName()); // 로그인 한 유저가 글쓰면 null 에러 발생
+		SiteUser siteUser = userService.getUser(principal.getName()); // 로그인 안한 유저가 글쓰면 null 에러 발생
 		// 현재 로그인된 유저의 username으로 엔티티 받기
 		
 		questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 		return "redirect:/question/list"; // 질문 리스트로 이동 (redirect 필수 - refresh)  
 	}
-	
+	// 글 수정 메서드
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/modify/{id}")
 	public String questionModify(@PathVariable("id") Integer id, Principal principal, QuestionForm questionForm) {
 		Question question = questionService.getQuestion(id); // 수정하려는 글의 엔티티 반환
@@ -129,4 +130,38 @@ public class QuestionController {
 		
 		return "question_form";
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value="/modify/{id}")
+	public String questionModify(@PathVariable("id") Integer id, Principal principal,
+			@Valid QuestionForm questionForm, BindingResult bindingResult) {
+			
+		if(bindingResult.hasErrors()) { // 에러 발생
+			return "question_form";
+		} 
+		Question question = questionService.getQuestion(id);
+		
+		if(!question.getAuthor().getUsername().equals(principal.getName())) { // 참이면 수정권한 없음 
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+		}
+		questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
+
+		return String.format("redirect:/question/detail/%s", id);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value="/delete/{id}")
+	public String questionDelete(@PathVariable("id") Integer id, Principal principal,
+			@Valid QuestionForm questionForm, BindingResult bindingResult) {
+		Question question = questionService.getQuestion(id);
+		
+		if(!question.getAuthor().getUsername().equals(principal.getName())) { // 참이면 삭제권한 없음 
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
+		}
+		
+		questionService.delete(question);
+		
+		return "redirect:/question/list";
+	}
+	
 }
