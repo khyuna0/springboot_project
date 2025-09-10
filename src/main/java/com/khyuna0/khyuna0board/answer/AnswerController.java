@@ -100,4 +100,15 @@ public class AnswerController {
 		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
 	}
     
+    @PreAuthorize("isAuthenticated()")
+	@GetMapping(value="/voteN/{id}")
+	public String answerVoteN(@PathVariable("id") Integer id, Principal principal) {
+    	Answer answer = answerService.getAnswer(id); // 유저가 추천한 질문 글의 엔티티 조회
+		SiteUser siteUser = userService.getUser(principal.getName());
+		
+		answerService.voteN(siteUser, answer);
+		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+		
+	}
+    
 }

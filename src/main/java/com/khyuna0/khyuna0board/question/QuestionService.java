@@ -69,7 +69,12 @@ public class QuestionService {
 		// question 의 멤버인 voter 를 get 해서 voter 에 추천을 누른 유저의 엔티티를 추가해줌
 		questionRepository.save(question); // 추천한 유저 수가 변경된 질문 엔티티를 다시 save해서 갱신
 	}
-
+	
+	public void voteN(SiteUser siteUser, Question question) { // 질문 글 비추천
+		question.getVoterN().add(siteUser);
+		questionRepository.save(question);
+	}
+	
 	public void questionHit(Question question) {  // 조회수 증가
 		question.setHit(question.getHit() + 1);
 		questionRepository.save(question);

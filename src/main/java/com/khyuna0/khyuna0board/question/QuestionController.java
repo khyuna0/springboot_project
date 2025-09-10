@@ -171,12 +171,22 @@ public class QuestionController {
 		Question question = questionService.getQuestion(id); // 유저가 추천한 질문 글의 엔티티 조회
 		SiteUser siteUser = userService.getUser(principal.getName()); // 로그인한 유저의 아이디로 유저 엔티티 조회하기
 		
-		if(!question.getAuthor().getUsername().equals(principal.getName())) { // 참이면 삭제권한 없음 
+		if(!question.getAuthor().getUsername().equals(principal.getName())) { 
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "추천 권한이 없습니다.");
 		}
 		questionService.vote(siteUser, question);
 		return String.format("redirect:/question/detail/%s", id);
 	}
-
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value="/voteN/{id}")
+	public String questionVoteN(@PathVariable("id") Integer id, Principal principal) {
+		Question question = questionService.getQuestion(id);
+		SiteUser siteUser = userService.getUser(principal.getName());
+		
+		questionService.voteN(siteUser, question);
+		return String.format("redirect:/question/detail/%s", id);
+		
+	}
 	
 }

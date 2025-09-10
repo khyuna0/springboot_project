@@ -56,4 +56,7 @@ public class Answer {
 	// n : n 관계,  답변 : 추천자
 	@ManyToMany
 	Set<SiteUser> voter; // 글을 추천한 유저
+	
+	@ManyToMany
+	Set<SiteUser> voterN; // 글을 추천한 유저
 }	

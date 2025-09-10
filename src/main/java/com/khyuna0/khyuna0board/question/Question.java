@@ -64,7 +64,10 @@ public class Question {
 	@ManyToMany
 	Set<SiteUser> voter; // 글을 추천한 유저가 중복 없이 여러 명의 유저가 저장 -> 유저의 수 = 추천 수
 	// Set - 중복 제거용 컬렉션 사용 -> 유저 한명 당 추천수 1개만 기록하기 위함
-
+	
+	@ManyToMany
+	Set<SiteUser> voterN; 
+	
 	private Integer hit = 0; // 질문 글 조회수
 }
 

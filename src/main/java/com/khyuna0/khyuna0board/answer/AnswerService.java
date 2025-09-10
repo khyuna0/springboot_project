@@ -59,5 +59,10 @@ public class AnswerService {
 		answerRepository.save(answer);
 		
 	}
+	
+	public void voteN(SiteUser siteUser, Answer answer) { // 질문 글 비추천
+		answer.getVoterN().add(siteUser);
+		answerRepository.save(answer);
+	}
 }
 
