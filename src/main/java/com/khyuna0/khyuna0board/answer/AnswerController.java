@@ -52,17 +52,42 @@ public class AnswerController {
 	}
     
     @PreAuthorize("isAuthenticated()") // 로그인한 사용자가 아니면 로그인 화면으로 강제 이동
-    @GetMapping(value = "/modify/{id}")
-    public String answerModify(@PathVariable("id") Integer id, @Valid AnswerForm answerForm,  BindingResult bindingResult, Principal principal) {
+    @GetMapping(value = "/modify/{id}") // form 으로 이동하는 요청
+    public String answerModify(@PathVariable("id") Integer id, AnswerForm answerForm, Principal principal) {
     	Answer answer = answerService.getAnswer(id);
-    	if(!answer.getAuthor().equals(principal.getName())) { // 참이면 수정권한 없음
+    	if(!answer.getAuthor().getUsername().equals(principal.getName())) { // 참이면 수정권한 없음
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
 		}
-		answerForm.setContent(answer.getContent()); // model로 보내지 않아도 answerForm 이 전송됨
+		answerForm.setContent(answer.getContent()); // model 로 보내지 않아도 answerForm 이 전송됨
     	
     	return "answer_form";
     }
     
+    @PreAuthorize("isAuthenticated()") // 로그인한 사용자가 아니면 로그인 화면으로 강제 이동
+    @PostMapping(value = "/modify/{id}") // 질문 수정하기 (DB 업데이트)
+    public String answerModify(@PathVariable("id") Integer id, @Valid AnswerForm answerForm,  BindingResult bindingResult, Principal principal) {
+    	Answer answer = answerService.getAnswer(id); // 원본 불러옴
+    	if(bindingResult.hasErrors()) { 
+    		return "answer_form";
+    	}
+    	if(!answer.getAuthor().getUsername().equals(principal.getName())) { // 참이면 수정권한 없음
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+		}
+    	
+    	answerService.answerModify(answer, answerForm.getContent() );
+    	return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+    	// redirect -> 부모글(해당 답변이 달린 질문글)의 번호로 이동
+    }
     
+    @PreAuthorize("isAuthenticated()") // 로그인한 사용자가 아니면 로그인 화면으로 강제 이동
+    @GetMapping(value = "/delete/{id}") // 삭제하기
+    public String answerDelete(@PathVariable("id") Integer id, AnswerForm answerForm, Principal principal) {
+    	Answer answer = answerService.getAnswer(id); // 삭제할 답변 엔티티
+    	if(!answer.getAuthor().getUsername().equals(principal.getName())) { // 참이면 권한 없음
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
+		}
+    	answerService.answerDelete(answer);
+    	return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+    }
     
 }
