@@ -49,7 +49,7 @@ public class Question {
 	private LocalDateTime createdate; // 질문 게시판에 글 작성한 시간
 	
 	// 1 : n 관계 , 질문 글 하나 : 답변 여러개  
-	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)  	// CascadeType -> 질문 글 삭제될 경우 해당 질문 글의 답변 글도 같이 삭제됨
+	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // CascadeType -> 질문 글 삭제될 경우 해당 질문 글의 답변 글도 같이 삭제됨
 	private List<Answer> answerlist;
 	
 	// n : 1 관계

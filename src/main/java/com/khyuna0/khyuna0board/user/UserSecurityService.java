@@ -14,12 +14,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserSecurityService implements UserDetailsService{ // 로그인 구현 서비스
+public class UserSecurityService implements UserDetailsService{ 
 
 	@Autowired
 	private UserRepository userRepository;
 
-	@Override
+	@Override // 사용자 정보를 받는 객체
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		Optional<SiteUser> _siteUser = userRepository.findByUsername(username);

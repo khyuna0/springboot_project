@@ -105,7 +105,8 @@ public class QuestionController {
 		if(bindingResult.hasErrors()) { // 참이면 유효성 체크에서 에러 발생함
 			return "question_form"; // 에러 발생 시 다시 질문 폼으로 이동
 		}
-		SiteUser siteUser = userService.getUser(principal.getName());
+		// principal.getName() => (String) session.getAttribute("sessionId");
+		SiteUser siteUser = userService.getUser(principal.getName()); // 로그인 한 유저가 글쓰면 null 에러 발생
 		// 현재 로그인된 유저의 username으로 엔티티 받기
 		
 		questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
