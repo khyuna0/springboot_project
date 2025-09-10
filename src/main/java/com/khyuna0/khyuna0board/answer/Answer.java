@@ -48,5 +48,6 @@ public class Answer {
 	// n : 1 관계
 		@ManyToOne
 		private SiteUser author; // 답변
-	
-}
+		
+		private LocalDateTime modifydate; // 답 글 수정 일시
+}	
