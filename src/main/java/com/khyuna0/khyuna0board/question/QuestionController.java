@@ -151,8 +151,7 @@ public class QuestionController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/delete/{id}")
-	public String questionDelete(@PathVariable("id") Integer id, Principal principal,
-			@Valid QuestionForm questionForm, BindingResult bindingResult) {
+	public String questionDelete(@PathVariable("id") Integer id, Principal principal) {
 		Question question = questionService.getQuestion(id);
 		
 		if(!question.getAuthor().getUsername().equals(principal.getName())) { // 참이면 삭제권한 없음 
