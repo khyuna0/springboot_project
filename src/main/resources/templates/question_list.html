@@ -7,7 +7,7 @@
 		<div class="col-6">
 			<div class="input-group">
 				<input type="text" name="kw" id="search_kw" class="form-controle" th:value="${kw}">
-				<button class="btn btn-outline-secondary" type="button" id="btn_search"></button>
+				<button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
 			</div>
 		</div>
 	</div>
@@ -71,7 +71,9 @@
 		<input type="hidden" id="kw" name="kw" th:value="${kw}">
     </form>		
 	</div>
+	
 	<script layout:fragment="script" type="text/javascript">
+		// 페이지 번호 전송 시 -> kw(검색어)도 같이 전송하기 위한 자바 스크립트
 		const page_elements = document.getElementsByClassName("page-link");
 		Array.from(page_elements).forEach(function (element) {
 			element.addEventListener('click', function () {
@@ -79,6 +81,14 @@
 				document.getElementById('searchForm').submit();
 			});
 		});
-	
+		// 검색어와 페이지 번호를 같이 전송하기 위한 자바 스크립트
+		const btn_search = document.getElementById("btn_search");
+			btn_search.addEventListener('click',function () {
+				document.getElementById('kw').value = document.getElementById("search_kw").value; 
+				document.getElementById('page').value = 0 
+				// 검색버튼 클릭하면 -> kw값으로 검색란에 입력한 단어&page=0으로 리스트 조회 
+				document.getElementById('searchForm').submit();
+			});
+		
 	</script>
 </html>
