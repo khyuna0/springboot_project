@@ -13,7 +13,7 @@
 			</thead>
 			<tbody>
 				<tr class="text-center" th:each="question , loop : ${paging}">
-					<td th:text="${loop.count}"></td> <!-- 질문 글 번호 -->
+					<td th:text="${paging.getTotalElements - (paging.size * paging.number) - (loop.count-1)}"></td> <!-- 질문 글 번호 -->
 					<td class="text-start"> <!-- 제목 줄 왼쪽 정렬 -->
 						<!-- 자바 객체의 값을 더할 때는 반드시 ||로 좌우를 감싼다. -->
 						<a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}">제목</a>
