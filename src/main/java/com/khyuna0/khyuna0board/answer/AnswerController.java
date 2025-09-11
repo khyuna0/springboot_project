@@ -46,9 +46,10 @@ public class AnswerController {
 			model.addAttribute("question", question); 
 			return "question_detail";
 		}  
-		answerService.create(question,answerForm.getContent(), siteUser ); //DB에 답변 등록
+		Answer answer = answerService.create(question,answerForm.getContent(), siteUser ); //DB에 답변 등록
 		
-		return String.format("redirect:/question/detail/%s", id);  
+		
+		return String.format("redirect:/question/detail/%s#answer_%s", id, answer.getId());  
 	}
     
     @PreAuthorize("isAuthenticated()") // 로그인한 사용자가 아니면 로그인 화면으로 강제 이동
