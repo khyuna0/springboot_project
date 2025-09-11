@@ -57,7 +57,8 @@ public class QuestionController {
 		return "question_list";
 	}
 	*/
-	
+    
+    /* 페이징 X 리스트
 	@GetMapping(value = "/list") // value 생략 가능
 	//@ResponseBody
 	public String list(Model model) {
@@ -67,6 +68,23 @@ public class QuestionController {
 		List<Question> questionlist = questionService.getList();
 		// 1게시글 10개씩 자른 리스트 (페이지 당 10개)
 		model.addAttribute("questionList", questionlist);
+		return "question_list";
+	}
+	*/
+    
+    
+	@GetMapping(value = "/list") // value 생략 가능
+	//@ResponseBody page 값을 받지 않으면 기본값 = 0
+	public String list(Model model, @RequestParam( value = "page", defaultValue = "0" ) int page ) {
+		//List<Question> questionlist = questionRepository.findAll();		
+		//List<Question> questionlist = questionService.getList();
+		int pageSize = 10; 
+		
+		Page<Question> paging = questionService.getPageQuestions(page);
+		
+		//List<Question> questionlist = questionService.getList();
+		// 1게시글 10개씩 자른 리스트 (페이지 당 10개)
+		model.addAttribute("paging", paging);
 		return "question_list";
 	}
 	

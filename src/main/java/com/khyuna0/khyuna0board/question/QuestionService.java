@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -77,7 +78,22 @@ public class QuestionService {
 	
 	public void questionHit(Question question) {  // 조회수 증가
 		question.setHit(question.getHit() + 1);
-		questionRepository.save(question);
+		questionRepository.save(question);	
+	}
+	
+	// 페이징
+	public Page<Question> getPageQuestions(int page) {
+		int size = 10; // 1 페이지 당 글의 개수 (10개)
+		int startRow = page * size; // 첫 페이지(page = 0) 시작할 레코드 넘버
+		int endRow = startRow + size; // 페이지 끝나는 레코드 넘버
+		// 한 페이지 당 출력될 글 리스트
+		List<Question> pageQuestionList = questionRepository.findQuestionsWithPaging(startRow, endRow);
 		
+		long totalQuestion = questionRepository.count(); // 모든 글 개수
+		
+		// ( 실제 출력될 리스트 + 현재 페이지 정보 + 전체 글 개수 )를 페이지 객체로 묶어서 반환함
+		Page<Question> pagingList = new PageImpl<>(pageQuestionList, PageRequest.of(page, size), totalQuestion);
+		
+		return pagingList;
 	}
 }

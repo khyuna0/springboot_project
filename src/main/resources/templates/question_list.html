@@ -1,5 +1,6 @@
 <html layout:decorate="~{layout}">
 	<div layout:fragment="content" class="container my-3">
+		<a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a><br><br>
 		<table class="table">
 			<thead class="table-dark">
 				<tr class="text-center">
@@ -11,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="text-center" th:each="question , loop : ${questionList}">
+				<tr class="text-center" th:each="question , loop : ${paging}">
 					<td th:text="${loop.count}"></td> <!-- 질문 글 번호 -->
 					<td class="text-start"> <!-- 제목 줄 왼쪽 정렬 -->
 						<!-- 자바 객체의 값을 더할 때는 반드시 ||로 좌우를 감싼다. -->
@@ -27,6 +28,23 @@
 				</tr>
 			</tbody>	
 		</table>
-		<a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
+		<!-- 페이징 처리 시작 -->
+		<div th:if="${!paging.isEmpty()}"> <!-- paging 객체 내에 글이 존재하면 참(페이징 버튼 출력) -->
+			<ul class="pagination justify-content-center">
+				<!-- 이전 -->
+				<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+					<a class="page-link" th:href="@{|?page=${paging.number-1}|}">
+						<span>이전</span>
+					</a>
+				</li>
+				<!-- 다음 -->
+				<li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+					<a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+						<span>다음</span>	
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!-- 페이징 처리 끝 -->
 	</div>
 </html>
