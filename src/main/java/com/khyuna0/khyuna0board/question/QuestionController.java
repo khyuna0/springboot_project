@@ -75,16 +75,17 @@ public class QuestionController {
     
 	@GetMapping(value = "/list") // value 생략 가능
 	//@ResponseBody page 값을 받지 않으면 기본값 = 0
-	public String list(Model model, @RequestParam( value = "page", defaultValue = "0" ) int page ) {
+	public String list(Model model, @RequestParam( value = "page", defaultValue = "0" ) int page ,@RequestParam( value = "kw", defaultValue = "" ) String kw) {
 		//List<Question> questionlist = questionRepository.findAll();		
 		//List<Question> questionlist = questionService.getList();
-		int pageSize = 10; 
+		//int pageSize = 10; 
 		
-		Page<Question> paging = questionService.getPageQuestions(page);
+		Page<Question> paging = questionService.getPageQuestions(page, kw);
 		
 		//List<Question> questionlist = questionService.getList();
 		// 1게시글 10개씩 자른 리스트 (페이지 당 10개)
 		model.addAttribute("paging", paging);
+		model.addAttribute("kw", kw);
 		return "question_list";
 	}
 	
