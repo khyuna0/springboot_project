@@ -37,6 +37,12 @@
 						<span>이전</span>
 					</a>
 				</li>
+				<!-- 페이지 번호 표시 버튼 1, 2, 3 ... -->
+				<li th:each="page : ${#numbers.sequence(0, paging.totalPages-1)}"
+					th:if="${page >= paging.number-5 and page <= paging.number+5}"
+					th:class="${page == paging.number} ? 'active'" class="page-item">
+					<a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}">페이지버튼</a>
+				</li>
 				<!-- 다음 -->
 				<li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
 					<a class="page-link" th:href="@{|?page=${paging.number+1}|}">
