@@ -7,22 +7,14 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
+
 import org.springframework.stereotype.Service;
 
 import com.khyuna0.khyuna0board.DataNotFoundException;
-import com.khyuna0.khyuna0board.answer.Answer;
+
 import com.khyuna0.khyuna0board.user.SiteUser;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.JoinType;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
-import jakarta.transaction.Transactional;
-import javassist.SerialVersionUID;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor 

@@ -1,9 +1,7 @@
 package com.khyuna0.khyuna0board.question;
 
 import java.security.Principal;
-import java.util.List;
 
-import org.glassfish.jaxb.core.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

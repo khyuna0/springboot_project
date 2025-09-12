@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'war'
 }
 
 group = 'com.khyuna0'
@@ -12,6 +13,13 @@ java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
+}
+
+bootWar { // war 파일 배포파일명
+	archiveBaseName='khBoard'
+	archiveFileName='khBoard'
+	archiveVersion="0.0.0"
+	
 }
 
 configurations {
@@ -43,10 +51,18 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+	//runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	
+	// oracle cloud DB connection
+	implementation "com.oracle.database.jdbc:ojdbc11:23.5.0.24.07"
+
+   // Wallet
+  	 implementation "com.oracle.database.security:oraclepki:23.5.0.24.07"
+   //implementation "com.oracle.database.security:osdt_core"
+   //implementation "com.oracle.database.security:osdt_cert"
 	
 }
 
