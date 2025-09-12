@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 	
-	@GetMapping(value = "/khBoard") // root 요청 처리 (클라우드용)
 	//@GetMapping(value = "/") // root 요청 처리 (로컬용)
+	@GetMapping(value = "/") // root 요청 처리 (클라우드용)
 	public String root(Model model) {
 		
 		return "redirect:/question/list";

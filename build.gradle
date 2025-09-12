@@ -16,8 +16,8 @@ java {
 }
 
 bootWar { // war 파일 배포파일명
-	archiveBaseName='khBoard'
-	archiveFileName='khBoard'
+	archiveBaseName='khboard'
+	archiveFileName='khboard.war'
 	archiveVersion="0.0.0"
 	
 }
